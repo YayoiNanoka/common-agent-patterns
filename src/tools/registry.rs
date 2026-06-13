@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::sync::Arc;
 
 use crate::tools::base::Tool;
+use crate::tools::builtin::calculator::CalculatorTool;
 use crate::tools::builtin::search::SearchTool;
 
 /// 工具注册表，负责保存和查找当前 Agent 可用的所有工具。
@@ -73,9 +74,10 @@ impl Default for ToolRegistry {
 
 /// 构建 demo 阶段默认使用的工具注册表。
 ///
-/// 当前只注册 mock 版 `SearchTool`，后续可以在这里继续添加 calculator 等内置工具。
+/// 当前默认注册搜索工具和计算器工具。
 pub fn build_default_registry() -> anyhow::Result<ToolRegistry> {
     let mut registry = ToolRegistry::new();
     registry.register(SearchTool)?;
+    registry.register(CalculatorTool)?;
     Ok(registry)
 }

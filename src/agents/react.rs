@@ -3,6 +3,7 @@ use serde_json::Value;
 
 use crate::agents::base::Agent;
 use crate::agents::types::AgentInput;
+use crate::console::print_block;
 use crate::llm::LlmClient;
 use crate::tools::base::ToolResult;
 use crate::tools::executor::ToolExecutor;
@@ -62,7 +63,7 @@ impl ReactAgent {
         let executor = ToolExecutor::new(registry);
 
         println!("🤖 ReAct Agent 初始化完成。最大循环轮次: {max_steps}");
-        println!("🧰 已加载工具:\n{tools_description}");
+        print_block("🧰 已加载工具", &tools_description);
 
         Self {
             llm,
@@ -116,7 +117,7 @@ impl Agent for ReactAgent {
             );
 
             let llm_output = self.llm.chat(&prompt)?;
-            println!("📨 LLM 原始输出:\n{llm_output}");
+            print_block("📨 ReAct LLM 原始输出", &llm_output);
 
             let action = parse_react_action(&llm_output)?;
 
@@ -126,7 +127,7 @@ impl Agent for ReactAgent {
                     println!("📦 工具参数: {args}");
 
                     let observation = self.execute_tool(&name, args)?;
-                    println!("👀 Observation:\n{}", observation.content);
+                    print_block("👀 ReAct Observation", &observation.content);
 
                     history.push(format!(
                         "Step {step}:\n{llm_output}\nObservation: {}",
