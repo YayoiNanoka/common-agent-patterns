@@ -1,0 +1,32 @@
+# Rust build output
+/target/
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+
+# Project-local API key configuration
+src/config.rs
+!src/config.example.rs
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+tmp/
+temp/
+
+# Rust tooling caches
+/.cargo/
+/.rustc_info.json
